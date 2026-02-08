@@ -1,104 +1,201 @@
-// ===== INITIALIZE STORAGE =====
-if (localStorage.getItem("users") === null) {
-  localStorage.setItem("users", ""); // empty string if no users
+//  CREATE STORAGE IF NOT EXIST
+let usersData = localStorage.getItem("users");
+
+if (usersData == null)
+{
+    localStorage.setItem("users", "");
+}
+// CHECK LOGIN SESSION
+function checkSession()
+{
+    let savedUser = localStorage.getItem("currentUser");
+
+    if (savedUser == null)
+    {
+        showLogin();
+    }
+    else
+    {
+        if (savedUser == "")
+        {
+            showLogin();
+        }
+        else
+        {
+            showDashboard(savedUser);
+        }
+    }
+}
+//  SHOW DIFFERENT SCREENS
+function showLogin()
+{
+    document.getElementById("login-box").style.display = "block";
+    document.getElementById("signup-box").style.display = "none";
+    document.getElementById("dashboard").style.display = "none";
 }
 
-// ===== CHECK SESSION =====
-function checkSession() {
-  let currentUser = localStorage.getItem("currentUser");
-  if (currentUser) {
-    showDashboard(currentUser);
-  } else {
+function showSignup()
+{
+    document.getElementById("login-box").style.display = "none";
+    document.getElementById("signup-box").style.display = "block";
+    document.getElementById("dashboard").style.display = "none";
+}
+
+function showDashboard(email)
+{
+    document.getElementById("login-box").style.display = "none";
+    document.getElementById("signup-box").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+
+    document.getElementById("user-name").innerText = email;
+}
+// SIGNUP
+
+function signup()
+{
+    let emailInput = document.getElementById("signup-email").value;
+    let passwordInput = document.getElementById("signup-password").value;
+
+    if (emailInput == "")
+    {
+        alert("Enter Email");
+        return;
+    }
+
+    if (passwordInput == "")
+    {
+        alert("Enter Password");
+        return;
+    }
+
+    // get stored users
+    let storedText = localStorage.getItem("users");
+
+    let usersList; // yaha se array create kar rha hu
+
+    if (storedText == "")
+    {
+        usersList = [];
+    }
+    else
+    {
+        usersList = storedText.split(","); // using the in built fuction 
+    }
+
+    // check duplicate
+    let alreadyExists = false;
+
+    for (let i = 0; i < usersList.length; i++)
+    {
+        let singleRecord = usersList[i];
+
+        let parts = singleRecord.split("|");
+
+        let savedEmail = parts[0];
+
+        if (savedEmail == emailInput)
+        {
+            alreadyExists = true;
+        }
+    }
+
+    if (alreadyExists == true)
+    {
+        alert("User already registered . Please Login ! ");
+        return;
+    }
+
+    // add new user
+    let newRecord = emailInput + "|" + passwordInput;
+
+    usersList.push(newRecord);
+
+    let finalData = usersList.join(",");
+
+    localStorage.setItem("users", finalData);
+
+    alert("Signup successful");
     showLogin();
-  }
 }
+//  LOGIN
+function login()
+{
+    let loginEmail = document.getElementById("login-email").value;
+    let loginPassword = document.getElementById("login-password").value;
 
-// ===== UI CONTROL FUNCTIONS =====
-function showLogin() {
-  document.getElementById("login-box").style.display = "block";
-  document.getElementById("signup-box").style.display = "none";
-  document.getElementById("dashboard").style.display = "none";
-}
+    
 
-function showSignup() {
-  document.getElementById("login-box").style.display = "none";
-  document.getElementById("signup-box").style.display = "block";
-  document.getElementById("dashboard").style.display = "none";
-}
-
-function showDashboard(email) {
-  document.getElementById("login-box").style.display = "none";
-  document.getElementById("signup-box").style.display = "none";
-  document.getElementById("dashboard").style.display = "block";
-  document.getElementById("user-name").innerText = email;
-}
-
-// ===== SIGNUP FUNCTION =====
-function signup() {
-  let email = document.getElementById("signup-email").value.trim();
-  let password = document.getElementById("signup-password").value.trim();
-
-  if (email === "" || password === "") {
-    alert("Please fill all fields!");
-    return;
-  }
-
-  let usersText = localStorage.getItem("users");
-  let users = usersText ? usersText.split(",") : [];
-
-  // Check if user already exists
-  for (let i = 0; i < users.length; i++) {
-    let data = users[i].split("|");
-    if (data[0] === email) {
-      alert("User already exists!");
-      return;
+    if (loginEmail == "")
+    {
+        alert("Enter Email");
+        return;
     }
-  }
 
-  // Add new user
-  users.push(email + "|" + password);
-  localStorage.setItem("users", users.join(","));
-
-  alert("Signup successful! Please login.");
-  showLogin();
-}
-
-// ===== LOGIN FUNCTION =====
-function login() {
-  let email = document.getElementById("login-email").value.trim();
-  let password = document.getElementById("login-password").value.trim();
-
-  if (email === "" || password === "") {
-    alert("Please fill all fields!");
-    return;
-  }
-
-  let usersText = localStorage.getItem("users");
-  let users = usersText ? usersText.split(",") : [];
-  let found = false;
-
-  for (let i = 0; i < users.length; i++) {
-    let data = users[i].split("|");
-    if (data[0] === email && data[1] === password) {
-      found = true;
-      break;
+    if (loginPassword == "")
+    {
+        alert("Enter Password");
+        return;
     }
-  }
 
-  if (found) {
-    localStorage.setItem("currentUser", email);
-    showDashboard(email);
-  } else {
-    alert("Invalid Email or Password!");
-  }
+    let storedText = localStorage.getItem("users");
+
+    let usersList;
+
+    if (storedText == "")
+    {
+        usersList = [];
+    }
+    else
+    {
+        usersList = storedText.split(",");
+    }
+
+    let loginSuccess = false;
+
+    for (let i = 0; i < usersList.length; i++)
+    {
+        let singleRecord = usersList[i];
+
+        let parts = singleRecord.split("|");
+
+        let savedEmail = parts[0];
+        let savedPassword = parts[1];
+
+        if (savedEmail == loginEmail)
+        {
+            if (savedPassword == loginPassword)
+            {
+                loginSuccess = true;
+            }
+        }
+    }
+
+    if (loginSuccess == true)
+    {
+        localStorage.setItem("currentUser", loginEmail);
+        showDashboard(loginEmail);
+    }
+    else
+    {
+        alert("Wrong email or password");
+    }
+}
+// LOGOUT
+function logout()
+{
+    localStorage.removeItem("currentUser");
+    showLogin();
 }
 
-// ===== LOGOUT FUNCTION =====
-function logout() {
-  localStorage.removeItem("currentUser");
-  showLogin();
-}
 
-// ===== CALL CHECK SESSION ON PAGE LOAD =====
-window.onload = checkSession;
+// ==========================
+// STEP 7 : RUN WHEN PAGE LOADS
+// ==========================
+
+window.onload = function ()
+{
+    checkSession();
+};
+
+
 
