@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GLUG task</title>
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body onload="checkSession()">
+  <!-- LOGIN BOX -->
+  <div id="login-box" class="box">
+    <h2 id="change-karna-hai">HEY! WELCOME <br> <br> Login </h2>
+    <input type="email" id="login-email" placeholder="Enter your Email">
+    <input type="password" id="login-password" placeholder="Enter Your Password">
+    <button onclick="login()">Login</button>
+    <br>
+    <br>
+    <br>
+    <p>
+      Don't have an account ? 
+      <span onclick="showSignup()" class="link"> <br> Sign up </span>
+    </p>
+  </div>
+  <!-- SIGNUP BOX -->
+  <div id="signup-box" class="box" style="display:none;">
+    <h2>Sign Up</h2>
+    <input type="email" id="signup-email" placeholder="Email">
+    <input type="password" id="signup-password" placeholder="Password">
+    <button onclick="signup()">Sign Up</button>
+    <p>
+      <br>
+      Already have account? <br>
+      <span onclick="showLogin()" class="link">Login</span>
+    </p>
+  </div>
+  <!-- DASHBOARD -->
+  <div id="dashboard" class="box" style="display:none;">
+    <h2>Welcome</h2>
+    <h3>Have a Very Great Day !<br> <br></h3>
+    <h3 id="user-name"> </h3>
+    <button onclick="logout()">Logout</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+

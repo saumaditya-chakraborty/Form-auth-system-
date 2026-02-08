@@ -1,0 +1,76 @@
+/* Reset basic spacing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Page background */
+body {
+  background: #325374;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding-top: 300px ;
+}
+
+/* Login & dashboard box */
+#login-box,
+#dashboard {
+  background: #334c66;
+  width: 300px;
+  margin: auto;
+  padding: 20px 20px 20px 20px;
+  border-radius: 8px;
+  display: none; /* shown using JavaScript */
+}
+
+/* Heading */
+h2 {
+  margin-bottom: 15px;
+}
+
+/* Input fields */
+input {
+  width: 90%;
+  padding: 8px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+}
+
+/* Buttons */
+button {
+  width: 50%;
+  padding: 8px;
+  margin-top: 8px;
+  border: none;
+  background: #3c9d49;
+  color: rgb(235, 234, 234);
+  cursor: pointer;
+}
+
+/* Username text */
+#user-name {
+  color: #e7d106;
+  font-weight: bold;
+}
+.link{
+text-decoration: underline;
+  cursor: pointer;
+  color: #f9d400;
+}
+#change-karna-hai{
+  color: rgb(251, 251, 1);
+}
+#signup-box{
+  background: #34495e;
+  width: 300px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 8px;
+  display: none;
+
+
+}
+
